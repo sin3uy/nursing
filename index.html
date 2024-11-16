@@ -1,503 +1,333 @@
-<html><head><base href="." /><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تسجيل الطلاب</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<html><head><base href="." />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المعهد الفني للتمريض - تسجيل الطلاب</title>
 <style>
+:root {
+  --primary-color: #2c3e50;
+  --secondary-color: #34495e;
+  --accent-color: #3498db;
+  --glass-bg: rgba(255, 255, 255, 0.15);
+  --text-color: #ecf0f1;
+}
+
 body {
-    font-family: 'Tajawal', 'Arial', sans-serif;
-    margin: 0;
-    padding: 20px;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #f5f9ff 0%, #ffffff 100%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  font-family: 'Tajawal', 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  min-height: 100vh;
+  direction: rtl;
+  color: var(--text-color);
+}
+
+.header {
+  text-align: center;
+  padding: 3rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+  color: white;
+  margin: 0;
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px var(--accent-color);
+  }
+  to {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px var(--accent-color);
+  }
 }
 
 .container {
-    width: 100%;
-    max-width: 600px;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 3rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transform: translateY(0);
+  transition: transform 0.3s ease;
 }
 
-.institute-header {
-    color: #1e3c72;
-    font-size: 28px;
-    margin-bottom: 20px;
-    font-weight: 700;
-    text-align: center;
-}
-
-.announcement {
-    background: rgba(79, 172, 254, 0.2);
-    color: #1e3c72;
-    padding: 15px;
-    border-radius: 25px;
-    margin: 20px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.announcement i {
-    font-size: 24px;
-}
-
-.header-image {
-    display: none;
+.container:hover {
+  transform: translateY(-5px);
 }
 
 .dropdown {
-    position: relative;
-    margin-bottom: 20px;
-    width: 100%;
-    z-index: 100; /* Ensure proper stacking context */
+  position: relative;
+  margin-bottom: 2rem;
 }
 
 .dropdown-btn {
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 25px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+  width: 100%;
+  padding: 1.2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: white;
+  transition: all 0.3s ease;
 }
 
 .dropdown-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.01);
 }
 
 .dropdown-content {
-    display: none;
-    position: absolute;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.98);
-    border-radius: 15px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    z-index: 1000; /* Ensure it appears above other content */
-    top: 100%; /* Position below button */
-    left: 0;
-    right: 0;
-    margin-top: 10px;
-    padding: 10px 0;
-    border: 2px solid rgba(79, 172, 254, 0.2);
+  display: none;
+  position: absolute;
+  width: 100%;
+  background: rgba(44, 62, 80, 0.95);
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  margin-top: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-content.show {
+  display: block;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .dropdown-content button {
-    width: 100%;
-    padding: 15px 20px;
-    border: none;
-    background: transparent;
-    color: #1e3c72;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.dropdown-content button i {
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #4facfe;
+  width: 100%;
+  padding: 1.2rem;
+  border: none;
+  background: none;
+  text-align: right;
+  cursor: pointer;
+  color: white;
+  transition: all 0.2s ease;
 }
 
 .dropdown-content button:hover {
-    background: rgba(79, 172, 254, 0.1);
-    padding-right: 25px;
+  background: rgba(255, 255, 255, 0.1);
+  padding-right: 1.5rem;
 }
 
-.dropdown-content button:not(:last-child) {
-    border-bottom: 1px solid rgba(79, 172, 254, 0.1);
+.input-field {
+  width: 100%;
+  padding: 1.2rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  font-size: 1.1rem;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  transition: all 0.3s ease;
 }
 
-.input-container {
-    position: relative;
-    width: 100%;
-    margin: 10px 0;
+.input-field::placeholder {
+  color: rgba(255, 255, 255, 0.6);
 }
 
-.input-container i {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #1e3c72;
-}
-
-input {
-    width: calc(100% - 34px);
-    padding: 15px;
-    margin: 10px 0;
-    border: 2px solid rgba(79, 172, 254, 0.3);
-    border-radius: 25px;
-    background: white;
-    color: #1e3c72;
-    font-size: 16px;
-    text-align: center;
-}
-
-input::placeholder {
-    color: rgba(30, 60, 114, 0.7);
+.input-field:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .submit-btn {
-    width: 100%;
-    padding: 15px;
-    margin-top: 20px;
-    border: none;
-    border-radius: 25px;
-    background: linear-gradient(45deg, #1e3c72 0%, #2a5298 100%);
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+  width: 100%;
+  padding: 1.2rem;
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
 }
 
 .submit-btn:hover {
-    transform: translateY(-2px);
+  background: #2980b9;
+  transform: scale(1.02);
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
 }
 
-.loading {
-    display: none;
-    margin-top: 20px;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    color: white;
-    backdrop-filter: blur(10px);
+.submit-btn:active {
+  transform: scale(0.98);
 }
 
-.success-message {
-    color: #1e3c72; /* Change text color to dark blue */
-    text-align: center;
-    background: rgba(79, 172, 254, 0.1); /* Light blue background */
-    padding: 15px;
-    border-radius: 15px;
-}
-
-.success-message a {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 10px 20px;
-    background: linear-gradient(45deg, #25D366, #128C7E); /* WhatsApp colors */
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 25px;
-    transition: transform 0.3s ease;
-}
-
-.success-message a:hover {
-    transform: translateY(-2px);
-}
-
-.success-message a i {
-    margin-left: 5px;
-}
-
-.ripple {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.7);
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    border-radius: 50%;
-    animation: ripple-effect 1s linear infinite;
-}
-
-@keyframes ripple-effect {
-    0% {
-        width: 0;
-        height: 0;
-        opacity: 0.5;
-    }
-    100% {
-        width: 500px;
-        height: 500px;
-        opacity: 0;
-    }
-}
-
-@media (max-width: 600px) {
-    body {
-        padding: 10px;
-    }
-    
-    .container {
-        width: 95%;
-    }
+@media (max-width: 768px) {
+  .container {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .header {
+    padding: 2rem;
+  }
+  
+  .header h1 {
+    font-size: 2rem;
+  }
 }
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+<div class="header">
+  <h1>المعهد الفني للتمريض</h1>
+</div>
+
 <div class="container">
-    <h1 class="institute-header">
-        <i class="fas fa-hospital-user"></i>
-        المعهد الفني للتمريض
-    </h1>
-    
-    <div class="announcement">
-        <i class="fas fa-users"></i>
-        <span>يرجى من جميع الطلاب الذين لم يؤدوا الامتحان عبر الإنترنت التسجيل في الموقع</span>
+  <div class="dropdown">
+    <button class="dropdown-btn" id="subjectBtn">اختر المادة</button>
+    <div class="dropdown-content" id="subjectDropdown">
+      <button data-subject="حقوق الانسان">حقوق الانسان</button>
+      <button data-subject="علم وظائف الاعضاء">علم وظائف الاعضاء</button>
+      <button data-subject="ميكروبولوجي والتحكم في العدوى">ميكروبولوجي والتحكم في العدوى</button>
+      <button data-subject="علم جودة">علم جودة</button>
+      <button data-subject="كيمياء حيوي وتغذية">كيمياء حيوي وتغذية</button>
+      <button data-subject="اخلاقيات مهنة التمريض">اخلاقيات مهنة التمريض</button>
     </div>
-    
-    <div class="dropdown">
-        <button class="dropdown-btn">
-            <i class="fas fa-book"></i>
-            <span>اختر المادة</span>
-        </button>
-        <div class="dropdown-content">
-            <button data-subject="حقوق الانسان"></button>
-            <button data-subject="علم وظائف الاعضاء"></button>
-            <button data-subject="ميكروبولوجي والتحكم في العدوى"></button>
-            <button data-subject="علم جودة"></button>
-            <button data-subject="كيمياء حيوي وتغذية"></button>
-            <button data-subject="اخلاقيات مهنة التمريض"></button>
-        </div>
-    </div>
-    
-    <div class="input-container">
-        <i class="fas fa-user"></i>
-        <input type="text" id="studentName" placeholder="ادخل اسم الطالب رباعي" dir="rtl">
-    </div>
-    
-    <button class="submit-btn">
-        <i class="fas fa-paper-plane"></i>
-        <span>ارسال البيانات</span>
-    </button>
-    
-    <div class="loading"></div>
+  </div>
+
+  <input type="text" id="studentName" class="input-field" placeholder="ادخل اسم الطالب رباعي" dir="rtl">
+  <button class="submit-btn" id="submitBtn">ارسال البيانات</button>
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    let selectedSubject = '';
-    let submissionCount = 0;
-    const namesList = new Map();
-    const subjectStudents = {
-        'حقوق الانسان': [],
-        'علم وظائف الاعضاء': [],
-        'ميكروبولوجي والتحكم في العدوى': [],
-        'علم جودة': [],
-        'كيمياء حيوي وتغذية': [],
-        'اخلاقيات مهنة التمريض': []
-    };
+const BOT_TOKEN = '7942952051:AAHNwsiUkm0k3Am7rKgkaj1N5191QGby_zk';
+const CHAT_ID = '7785980587';
 
-    const subjectMessageIds = {
-        'حقوق الانسان': null,
-        'علم وظائف الاعضاء': null,
-        'ميكروبولوجي والتحكم في العدوى': null,
-        'علم جودة': null,
-        'كيمياء حيوي وتغذية': null,
-        'اخلاقيات مهنة التمريض': null
-    };
+let selectedSubject = '';
+const subjectData = {
+    'حقوق الانسان': [],
+    'علم وظائف الاعضاء': [],
+    'ميكروبولوجي والتحكم في العدوى': [],
+    'علم جودة': [],
+    'كيمياء حيوي وتغذية': [],
+    'اخلاقيات مهنة التمريض': []
+};
 
-    const dropdownBtn = document.querySelector('.dropdown-btn');
-    const dropdownContent = document.querySelector('.dropdown-content');
-    
-    // Add click handler for the dropdown button
-    if (dropdownBtn && dropdownContent) {
-        // Handle dropdown button clicks
-        dropdownBtn.addEventListener('click', function(e) {
-            e.stopPropagation(); // Prevent click from bubbling up
-            dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-        });
+const messageIds = {
+    'حقوق الانسان': null,
+    'علم وظائف الاعضاء': null,
+    'ميكروبولوجي والتحكم في العدوى': null,
+    'علم جودة': null,
+    'كيمياء حيوي وتغذية': null,
+    'اخلاقيات مهنة التمريض': null
+};
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!dropdownBtn.contains(e.target) && !dropdownContent.contains(e.target)) {
-                dropdownContent.style.display = 'none';
-            }
-        });
+document.getElementById('subjectBtn').onclick = function() {
+    document.getElementById('subjectDropdown').classList.toggle('show');
+}
 
-        // Prevent dropdown from closing when clicking inside it
-        dropdownContent.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
+document.getElementById('subjectDropdown').addEventListener('click', function(e) {
+    if (e.target.tagName === 'BUTTON') {
+        selectedSubject = e.target.dataset.subject;
+        document.getElementById('subjectBtn').textContent = selectedSubject;
+        document.getElementById('subjectDropdown').classList.remove('show');
     }
-
-    const subjectIcons = {
-        'حقوق الانسان': 'fas fa-balance-scale',
-        'علم وظائف الاعضاء': 'fas fa-heartbeat',
-        'ميكروبولوجي والتحكم في العدوى': 'fas fa-microscope',
-        'علم جودة': 'fas fa-chart-line',
-        'كيمياء حيوي وتغذية': 'fas fa-flask',
-        'اخلاقيات مهنة التمريض': 'fas fa-hand-holding-medical'
-    };
-
-    document.querySelectorAll('.dropdown-content button').forEach(button => {
-        const subject = button.dataset.subject;
-        const icon = subjectIcons[subject];
-        button.innerHTML = `<i class="${icon}"></i> ${subject}`;
-
-        button.addEventListener('click', function() {
-            selectedSubject = this.dataset.subject;
-            dropdownBtn.querySelector('span').textContent = selectedSubject;
-            dropdownContent.style.display = 'none';
-        });
-    });
-
-    async function updateSubjectMessage(subject, studentName) {
-        // Check if name already exists in this subject
-        if (subjectStudents[subject].includes(studentName)) {
-            alert('هذا الاسم مسجل مسبقاً في نفس المادة');
-            return false;
-        }
-
-        subjectStudents[subject].push(studentName);
-        const messageText = `مجموعة ${subject}:\n\n` + 
-            subjectStudents[subject].map((name, index) => 
-                `${index + 1}. ${name}`
-            ).join('\n');
-
-        try {
-            let response;
-            if (subjectMessageIds[subject]) {
-                response = await fetch(`https://api.telegram.org/bot7942952051:AAHNwsiUkm0k3Am7rKgkaj1N5191QGby_zk/editMessageText`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: '7785980587',
-                        message_id: subjectMessageIds[subject],
-                        text: messageText
-                    })
-                });
-            } else {
-                response = await fetch(`https://api.telegram.org/bot7942952051:AAHNwsiUkm0k3Am7rKgkaj1N5191QGby_zk/sendMessage`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: '7785980587',
-                        text: messageText
-                    })
-                });
-
-                if (response.ok) {
-                    const result = await response.json();
-                    subjectMessageIds[subject] = result.result.message_id;
-                }
-            }
-
-            if (!response.ok) {
-                throw new Error('Failed to send/update message');
-            }
-            return true;
-        } catch (error) {
-            console.error('Error updating subject message:', error);
-            return false;
-        }
-    }
-
-    function addRippleEffect(event) {
-        const button = event.currentTarget;
-        const circle = document.createElement('span');
-        const diameter = Math.max(button.clientWidth, button.clientHeight);
-        const radius = diameter / 2;
-
-        circle.style.width = circle.style.height = `${diameter}px`;
-        circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
-        circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
-        circle.classList.add('ripple');
-
-        const ripple = button.getElementsByClassName('ripple')[0];
-        if (ripple) {
-            ripple.remove();
-        }
-
-        button.appendChild(circle);
-    }
-
-    function isArabic(text) {
-        const arabicPattern = /[\u0600-\u06FF]/;
-        return arabicPattern.test(text);
-    }
-
-    const submitBtn = document.querySelector('.submit-btn');
-    if (submitBtn) {
-        submitBtn.addEventListener('click', async function(e) {
-            addRippleEffect(e);
-            
-            const studentName = document.getElementById('studentName').value.trim();
-            
-            if (!selectedSubject) {
-                alert('الرجاء اختيار المادة');
-                return;
-            }
-            
-            if (!studentName) {
-                alert('الرجاء إدخال اسم الطالب');
-                return;
-            }
-
-            if (!isArabic(studentName)) {
-                alert('الرجاء إدخال الاسم باللغة العربية فقط');
-                return;
-            }
-
-            const currentNameCount = namesList.get(studentName) || 0;
-
-            if (currentNameCount >= 2) {
-                alert('لا يمكن تسجيل نفس الاسم أكثر من مرتين');
-                return;
-            }
-
-            if (confirm('هل أنت متأكد من إرسال البيانات؟')) {
-                const loadingElement = document.querySelector('.loading');
-                loadingElement.style.display = 'block';
-
-                try {
-                    const success = await updateSubjectMessage(selectedSubject, studentName);
-                    
-                    if (success) {
-                        loadingElement.innerHTML = `
-                            <div class="success-message">
-                                <p>تم تسليم بياناتك وسيتم إخبارك عند نزول الامتحان على هذا الجروب في الواتساب:</p>
-                                <a href="https://chat.whatsapp.com/K1sUoz2e71zCNQYOgxjiqs" target="_blank">
-                                    <i class="fab fa-whatsapp"></i>
-                                    رابط مجموعة الواتساب
-                                </a>
-                            </div>`;
-                    } else {
-                        loadingElement.style.display = 'none';
-                    }
-                } catch (error) {
-                    alert('حدث خطأ أثناء إرسال البيانات. الرجاء المحاولة مرة أخرى.');
-                    loadingElement.style.display = 'none';
-                }
-            }
-        });
-    }
-
-    document.querySelectorAll('button').forEach(button => {
-        button.addEventListener('click', addRippleEffect);
-    });
 });
+
+document.getElementById('submitBtn').onclick = async function() {
+    const studentName = document.getElementById('studentName').value.trim();
+    
+    if (!selectedSubject) {
+        alert('الرجاء اختيار المادة');
+        return;
+    }
+    
+    if (!studentName) {
+        alert('الرجاء ادخال اسم الطالب');
+        return;
+    }
+    
+    if (/[a-zA-Z]/.test(studentName)) {
+        alert('الرجاء ادخال الاسم باللغة العربية فقط');
+        return;
+    }
+
+    if (subjectData[selectedSubject].includes(studentName)) {
+        alert('هذا الطالب مسجل بالفعل في هذه المادة');
+        return;
+    }
+
+    if (confirm('هل انت متأكد من ارسال البيانات؟')) {
+        subjectData[selectedSubject].push(studentName);
+        
+        const message = `المادة: ${selectedSubject}\nالطلاب المسجلين:\n${subjectData[selectedSubject].join('\n')}`;
+        
+        try {
+            if (messageIds[selectedSubject]) {
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/deleteMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: CHAT_ID,
+                        message_id: messageIds[selectedSubject]
+                    })
+                });
+            }
+
+            const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: message
+                })
+            });
+            
+            if (response.ok) {
+                const result = await response.json();
+                messageIds[selectedSubject] = result.result.message_id;
+                
+                alert('تم ارسال البيانات بنجاح');
+                document.getElementById('studentName').value = '';
+                document.getElementById('subjectBtn').textContent = 'اختر المادة';
+                selectedSubject = '';
+            } else {
+                throw new Error('فشل في ارسال البيانات');
+            }
+        } catch (error) {
+            alert('حدث خطأ اثناء ارسال البيانات');
+            console.error(error);
+        }
+    }
+}
+
+window.onclick = function(event) {
+    if (!event.target.matches('.dropdown-btn')) {
+        const dropdowns = document.getElementsByClassName('dropdown-content');
+        for (let dropdown of dropdowns) {
+            if (dropdown.classList.contains('show')) {
+                dropdown.classList.remove('show');
+            }
+        }
+    }
+}
 </script>
-</body>
-</html>
+</body></html>
