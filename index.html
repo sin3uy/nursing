@@ -1,0 +1,485 @@
+<html><head><base href="." /><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تسجيل الطلاب</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+body {
+    font-family: 'Tajawal', 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f9ff 0%, #ffffff 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.institute-header {
+    color: #1e3c72;
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.announcement {
+    background: rgba(79, 172, 254, 0.2);
+    color: #1e3c72;
+    padding: 15px;
+    border-radius: 25px;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.announcement i {
+    font-size: 24px;
+}
+
+.header-image {
+    display: none;
+}
+
+.dropdown {
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.dropdown-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.dropdown-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    backdrop-filter: blur(10px);
+    margin-top: 10px;
+    padding: 10px 0;
+    border: 2px solid rgba(79, 172, 254, 0.2);
+}
+
+.dropdown-content button {
+    width: 100%;
+    padding: 15px 20px;
+    border: none;
+    background: transparent;
+    color: #1e3c72;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dropdown-content button i {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4facfe;
+}
+
+.dropdown-content button:hover {
+    background: rgba(79, 172, 254, 0.1);
+    padding-right: 25px;
+}
+
+.dropdown-content button:not(:last-child) {
+    border-bottom: 1px solid rgba(79, 172, 254, 0.1);
+}
+
+.input-container {
+    position: relative;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.input-container i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #1e3c72;
+}
+
+input {
+    width: calc(100% - 34px);
+    padding: 15px;
+    margin: 10px 0;
+    border: 2px solid rgba(79, 172, 254, 0.3);
+    border-radius: 25px;
+    background: white;
+    color: #1e3c72;
+    font-size: 16px;
+    text-align: center;
+}
+
+input::placeholder {
+    color: rgba(30, 60, 114, 0.7);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(45deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+}
+
+.loading {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    color: white;
+    backdrop-filter: blur(10px);
+}
+
+.success-message {
+    color: #1e3c72; /* Change text color to dark blue */
+    text-align: center;
+    background: rgba(79, 172, 254, 0.1); /* Light blue background */
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.success-message a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #25D366, #128C7E); /* WhatsApp colors */
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 25px;
+    transition: transform 0.3s ease;
+}
+
+.success-message a:hover {
+    transform: translateY(-2px);
+}
+
+.success-message a i {
+    margin-left: 5px;
+}
+
+.ripple {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.7);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    border-radius: 50%;
+    animation: ripple-effect 1s linear infinite;
+}
+
+@keyframes ripple-effect {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0.5;
+    }
+    100% {
+        width: 500px;
+        height: 500px;
+        opacity: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        width: 95%;
+    }
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h1 class="institute-header">
+        <i class="fas fa-hospital-user"></i>
+        المعهد الفني للتمريض
+    </h1>
+    
+    <div class="announcement">
+        <i class="fas fa-users"></i>
+        <span>يرجى من جميع الطلاب الذين لم يمتحنوا الامتحان الاون لاين كتابه اسم الماده واسم الطالب</span>
+    </div>
+    
+    <div class="dropdown">
+        <button class="dropdown-btn">
+            <i class="fas fa-book"></i>
+            <span>اختر المادة</span>
+        </button>
+        <div class="dropdown-content">
+            <button data-subject="حقوق الانسان"></button>
+            <button data-subject="علم وظائف الاعضاء"></button>
+            <button data-subject="ميكروبولوجي والتحكم في العدوى"></button>
+            <button data-subject="علم جودة"></button>
+            <button data-subject="كيمياء حيوي وتغذية"></button>
+            <button data-subject="اخلاقيات مهنة التمريض"></button>
+        </div>
+    </div>
+    
+    <div class="input-container">
+        <i class="fas fa-user"></i>
+        <input type="text" id="studentName" placeholder="ادخل اسم الطالب رباعي" dir="rtl">
+    </div>
+    
+    <button class="submit-btn">
+        <i class="fas fa-paper-plane"></i>
+        <span>ارسال البيانات</span>
+    </button>
+    
+    <div class="loading"></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let selectedSubject = '';
+    let submissionCount = 0;
+    const namesList = new Map();
+    const subjectStudents = {
+        'حقوق الانسان': [],
+        'علم وظائف الاعضاء': [],
+        'ميكروبولوجي والتحكم في العدوى': [],
+        'علم جودة': [],
+        'كيمياء حيوي وتغذية': [],
+        'اخلاقيات مهنة التمريض': []
+    };
+
+    const subjectMessageIds = {
+        'حقوق الانسان': null,
+        'علم وظائف الاعضاء': null,
+        'ميكروبولوجي والتحكم في العدوى': null,
+        'علم جودة': null,
+        'كيمياء حيوي وتغذية': null,
+        'اخلاقيات مهنة التمريض': null
+    };
+
+    const dropdownBtn = document.querySelector('.dropdown-btn');
+    const dropdownContent = document.querySelector('.dropdown-content');
+    
+    if (dropdownBtn && dropdownContent) {
+        dropdownBtn.addEventListener('click', function() {
+            dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+        });
+    }
+
+    const subjectIcons = {
+        'حقوق الانسان': 'fas fa-balance-scale',
+        'علم وظائف الاعضاء': 'fas fa-heartbeat',
+        'ميكروبولوجي والتحكم في العدوى': 'fas fa-microscope',
+        'علم جودة': 'fas fa-chart-line',
+        'كيمياء حيوي وتغذية': 'fas fa-flask',
+        'اخلاقيات مهنة التمريض': 'fas fa-hand-holding-medical'
+    };
+
+    document.querySelectorAll('.dropdown-content button').forEach(button => {
+        const subject = button.dataset.subject;
+        const icon = subjectIcons[subject];
+        button.innerHTML = `<i class="${icon}"></i> ${subject}`;
+
+        button.addEventListener('click', function() {
+            selectedSubject = this.dataset.subject;
+            dropdownBtn.querySelector('span').textContent = selectedSubject;
+            dropdownContent.style.display = 'none';
+        });
+    });
+
+    async function updateSubjectMessage(subject, studentName) {
+        // Check if name already exists in this subject
+        if (subjectStudents[subject].includes(studentName)) {
+            alert('هذا الاسم مسجل مسبقاً في نفس المادة');
+            return false;
+        }
+
+        subjectStudents[subject].push(studentName);
+        const messageText = `مجموعة ${subject}:\n\n` + 
+            subjectStudents[subject].map((name, index) => 
+                `${index + 1}. ${name}`
+            ).join('\n');
+
+        try {
+            let response;
+            if (subjectMessageIds[subject]) {
+                response = await fetch(`https://api.telegram.org/bot7942952051:AAHNwsiUkm0k3Am7rKgkaj1N5191QGby_zk/editMessageText`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: '7785980587',
+                        message_id: subjectMessageIds[subject],
+                        text: messageText
+                    })
+                });
+            } else {
+                response = await fetch(`https://api.telegram.org/bot7942952051:AAHNwsiUkm0k3Am7rKgkaj1N5191QGby_zk/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: '7785980587',
+                        text: messageText
+                    })
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    subjectMessageIds[subject] = result.result.message_id;
+                }
+            }
+
+            if (!response.ok) {
+                throw new Error('Failed to send/update message');
+            }
+            return true;
+        } catch (error) {
+            console.error('Error updating subject message:', error);
+            return false;
+        }
+    }
+
+    function addRippleEffect(event) {
+        const button = event.currentTarget;
+        const circle = document.createElement('span');
+        const diameter = Math.max(button.clientWidth, button.clientHeight);
+        const radius = diameter / 2;
+
+        circle.style.width = circle.style.height = `${diameter}px`;
+        circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
+        circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
+        circle.classList.add('ripple');
+
+        const ripple = button.getElementsByClassName('ripple')[0];
+        if (ripple) {
+            ripple.remove();
+        }
+
+        button.appendChild(circle);
+    }
+
+    function isArabic(text) {
+        const arabicPattern = /[\u0600-\u06FF]/;
+        return arabicPattern.test(text);
+    }
+
+    const submitBtn = document.querySelector('.submit-btn');
+    if (submitBtn) {
+        submitBtn.addEventListener('click', async function(e) {
+            addRippleEffect(e);
+            
+            const studentName = document.getElementById('studentName').value.trim();
+            
+            if (!selectedSubject) {
+                alert('الرجاء اختيار المادة');
+                return;
+            }
+            
+            if (!studentName) {
+                alert('الرجاء إدخال اسم الطالب');
+                return;
+            }
+
+            if (!isArabic(studentName)) {
+                alert('الرجاء إدخال الاسم باللغة العربية فقط');
+                return;
+            }
+
+            const currentNameCount = namesList.get(studentName) || 0;
+
+            if (currentNameCount >= 2) {
+                alert('لا يمكن تسجيل نفس الاسم أكثر من مرتين');
+                return;
+            }
+
+            if (confirm('هل أنت متأكد من إرسال البيانات؟')) {
+                const loadingElement = document.querySelector('.loading');
+                loadingElement.style.display = 'block';
+
+                try {
+                    const success = await updateSubjectMessage(selectedSubject, studentName);
+                    
+                    if (success) {
+                        loadingElement.innerHTML = `
+                            <div class="success-message">
+                                <p>تم تسليم بياناتك وسيتم إخبارك عند نزول الامتحان على هذا الجروب في الواتساب:</p>
+                                <a href="https://chat.whatsapp.com/K1sUoz2e71zCNQYOgxjiqs" target="_blank">
+                                    <i class="fab fa-whatsapp"></i>
+                                    رابط مجموعة الواتساب
+                                </a>
+                            </div>`;
+                    } else {
+                        loadingElement.style.display = 'none';
+                    }
+                } catch (error) {
+                    alert('حدث خطأ أثناء إرسال البيانات. الرجاء المحاولة مرة أخرى.');
+                    loadingElement.style.display = 'none';
+                }
+            }
+        });
+    }
+
+    document.querySelectorAll('button').forEach(button => {
+        button.addEventListener('click', addRippleEffect);
+    });
+});
+</script>
+</body>
+</html>
